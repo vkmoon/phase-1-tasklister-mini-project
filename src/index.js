@@ -1,26 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
-  
+  let form = document.querySelector("#create-task-form");
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    inputToDo(e.target.querySelector("#new-task-description").value, e.target.priority_level.value);
+    inputToDo(e.target.querySelector("#new-task-description").value, e.target.priority_level.value, e.target.date.value);
     form.reset()
   })
 })
 
-let form = document.querySelector("#create-task-form");
-
-function inputToDo(todo, color) {
+function inputToDo(task, color, date) {
   let li = document.createElement("li");
-  li.textContent = `${todo}   `;
+  let newDate = formatDate(date)
+  li.textContent = `${task} ${newDate}  `;
   document.querySelector("#tasks").appendChild(li);
   deleteButton(li);
   priorityColor(li, color);
   prioritySort();
-}
+
+};
 
 function deleteButton(li) {
   let deleteBtn = document.createElement("button");
-  deleteBtn.addEventListener("click", handleComplete());
+  deleteBtn.addEventListener("click", handleComplete);
   deleteBtn.textContent = "Completed";
   li.appendChild(deleteBtn);
 }
@@ -61,3 +61,19 @@ function prioritySort() {
 function priorityColor(li, color){
   li.style = "color:" + color;
 }
+
+function formatDate(date){
+  let newDate = new Date(date);
+  newDate.setHours(newDate.getHours() + 7);
+  let formattedDate = `${newDate.getMonth() + 1}/${newDate.getDate()}/${newDate.getFullYear()}`;
+  return formattedDate;
+}
+
+function editTodo(li){
+
+}
+
+function completedList(){
+
+}
+

@@ -11,6 +11,8 @@
     <form id="create-task-form" action="" method="POST">
       <label for="new-task-description">Task description:</label>
       <input type="text" id="new-task-description" name="new-task-description" placeholder="description">
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date">
       <label for="priority_level">Priority:</label>
       <select id="priority_level">
         <option style= "color:green" value="green">Low</option>
@@ -18,7 +20,6 @@
         <option style= "color: red" value="red">High</option>  
       </select>
       <input type="submit" value="Create New Task">
-  
     </form>
 
     <div id="list">
@@ -26,7 +27,6 @@
       <ul id="tasks">
       </ul>
     </div>
-
     <script src="./src/index.js"></script>
   </div>
 
