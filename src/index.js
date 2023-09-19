@@ -3,19 +3,21 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     inputToDo(e.target.querySelector("#new-task-description").value, e.target.priority_level.value, e.target.date.value);
-    form.reset()
+    form.reset();
   })
 })
 
 function inputToDo(task, color, date) {
   let li = document.createElement("li");
-  let newDate = formatDate(date)
-  li.textContent = `${task} ${newDate}  `;
+  let newDate = formatDate(date);
+  let label = document.createElement("label");
+  label.innerText = `${task} ${newDate}  `;
+  li.appendChild(label);
   document.querySelector("#tasks").appendChild(li);
+  editTodo(li);
   completeButton(li);
   priorityColor(li, color);
   prioritySort();
-
 };
 
 function completeButton(li) {
@@ -29,6 +31,17 @@ function handleComplete(e) {
   let li = e.target.parentNode;
   e.target.parentNode.remove();
   document.querySelector("#tasks2").appendChild(li);
+  document.querySelector("button").remove();
+  document.querySelector("button").remove();
+  
+  let isEditMode = li.classList.contains("editMode");
+  
+  if (isEditMode) {
+    let editInput = li.querySelector("input[type=text]");
+    let label = li.querySelector("label");
+    label.innerText = editInput.value;
+    li.classList.toggle("editMode");
+  }
 }
 
 function prioritySort() {
@@ -72,10 +85,27 @@ function formatDate(date){
 }
 
 function editTodo(li){
-
+  let editInput = document.createElement("input");
+  let editButton = document.createElement("button");
+  editInput.type = "text";
+  editButton.innerText = "Edit";
+  editButton.className = "edit";
+  li.appendChild(editInput);
+  li.appendChild(editButton);
+  
+  let editTask = function() {
+    let listItem = this.parentNode;
+    let editInput = listItem.querySelector("input[type=text]");
+    let label = listItem.querySelector("label");
+    let containsClass = listItem.classList.contains("editMode");
+    if (containsClass) {
+        label.innerText = editInput.value;
+        editButton.innerText = "Edit";
+    } else {
+        editInput.value = label.innerText;
+        editButton.innerText = "Save";
+    }
+    listItem.classList.toggle("editMode");
+  }
+  editButton.onclick = editTask;
 }
-
-function completedList(){
-
-}
-
