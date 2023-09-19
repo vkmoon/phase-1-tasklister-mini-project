@@ -12,21 +12,23 @@ function inputToDo(task, color, date) {
   let newDate = formatDate(date)
   li.textContent = `${task} ${newDate}  `;
   document.querySelector("#tasks").appendChild(li);
-  deleteButton(li);
+  completeButton(li);
   priorityColor(li, color);
   prioritySort();
 
 };
 
-function deleteButton(li) {
-  let deleteBtn = document.createElement("button");
-  deleteBtn.addEventListener("click", handleComplete);
-  deleteBtn.textContent = "Completed";
-  li.appendChild(deleteBtn);
+function completeButton(li) {
+  let completeBtn = document.createElement("button");
+  completeBtn.addEventListener("click", handleComplete);
+  completeBtn.textContent = "Completed";
+  li.appendChild(completeBtn);
 }
 
 function handleComplete(e) {
+  let li = e.target.parentNode;
   e.target.parentNode.remove();
+  document.querySelector("#tasks2").appendChild(li);
 }
 
 function prioritySort() {
